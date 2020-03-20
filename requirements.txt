@@ -1,5 +1,0 @@
-nltk
-re
-string
-urllib.request
-Wikipedia.wikipedia
