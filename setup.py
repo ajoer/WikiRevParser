@@ -6,17 +6,6 @@ import os
 import re
 
 
-def local_file(file):
-  return codecs.open(
-    os.path.join(os.path.dirname(__file__), file), 'r', 'utf-8'
-  )
-
-install_reqs = [
-  line.strip()
-  for line in local_file('requirements.txt').readlines()
-  if line.strip() != ''
-]
-
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -30,7 +19,6 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ajoer/WikiRevisionParser",
-    install_requires = install_reqs,
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
