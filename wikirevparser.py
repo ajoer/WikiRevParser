@@ -1,13 +1,13 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 """ 
-	Parses elements of the edit histories of Wikipedia language versions.
+	Parses the edit histories of Wikipedia language versions.
 """
 import nltk
 import re
 import string
 
 from collections import Counter, defaultdict, OrderedDict
-
 from urllib.request import urlopen
 from Wikipedia.wikipedia import wikipedia
 from Wikipedia.wikipedia import exceptions
@@ -20,7 +20,7 @@ class ProcessRevisions:
 		self.event = event
 		
 	def wikipedia_page(self):
-		''' Get wikipedia revision history for an event in a given language and yield output'''
+		# Get Wikipedia revision history
 		wikipedia.set_lang(self.language)
 
 		try:
@@ -43,7 +43,7 @@ class ProcessRevisions:
 		return output_string
 
 	def get_links(self, input_string):
-
+		# Get links from content.
 		links = []
 		texts = []
 
@@ -63,9 +63,7 @@ class ProcessRevisions:
 		return links, texts
 
 	def get_occurrences(self, regex, content):
-		# Reg ex to get all references/citations in an edit history.
-		# Deletes the occurences from the content
-
+		# Get references/citations.
 		exp = re.compile(regex, re.IGNORECASE)
 		occurrences = exp.findall(content)
 		content = re.sub(exp, '', content)
@@ -73,8 +71,7 @@ class ProcessRevisions:
 		return occurrences, content
 
 	def get_reference_types(self, input_list):
-		# Extract the reference type from a reference/citation block in an edit history, 
-		# e.g. "book", "thesis", "news" etc.
+		# Get the reference type from a reference/citation block if annotated.
 		types = Counter()
 
 		for element in input_list:
@@ -89,8 +86,7 @@ class ProcessRevisions:
 		return types
 
 	def get_tlds(self, url_list):
-		# Extract the tlds from each url in a reference/citation block in an edit history.
-
+		# Get the top level domains (e.g. .de) from urls.
 		tlds = Counter()
 
 		for url in url_list:
@@ -100,14 +96,11 @@ class ProcessRevisions:
 		return tlds 
 
 	def get_urls(self, input_list):
-
-		# Todo: check whether this is the best way.
-
+		# Get URLs.
 		urls = []
 		http_regex = "http[s]*:\/\/([^ ]*)"
 
 		for element in input_list:
-			# they differ in endings:
 			url = re.search(http_regex + r"( |}})", element, re.IGNORECASE)
 			if url:
 				url = url.group(1).split("|")[0]
@@ -115,15 +108,13 @@ class ProcessRevisions:
 				url = re.search(http_regex, element, re.IGNORECASE)
 				if not url: continue
 				url = url.group(1).split("|")[0]
-
-			#if url is None: continue
 			if "www" in url:
 				url = url[4:]
 			urls.append(url)
 		return urls
 
 	def parse_images(self):
-		''' Extract and parse images.'''
+		# Get and parse images.
 		images = []
 		captions = []
 		links_from_captions = []
@@ -185,9 +176,7 @@ class ProcessRevisions:
 		return images, captions, links_from_captions
 
 	def parse_links_categories(self):
-		# Parse links and categories from an edit history. 
-		# Must be run after parse_images() because images have the same markup, and will otherwise feature as links.
-		
+		# Get and parse links and categories.
 		categories = []
 		links = []
 		possible_links, texts = self.get_links(self.content)
@@ -218,7 +207,7 @@ class ProcessRevisions:
 		return links, categories
 
 	def parse_references(self):
-		''' Extract and analyze references and their origin (tld) over time.'''
+		# Get and parse references and the top level domains.
 		reference_template_types = Counter() # some references have "type" markup, e.g. "book", "thesis", "news" etc.
 
 		regex_letters = "\dA-Za-zğäåæáéëíıïóøöúü"
@@ -236,11 +225,7 @@ class ProcessRevisions:
 		return urls, tlds_origin, reference_template_types
 
 	def parse_sections(self):
-		# Parse sections from edit history
-
-		#Todo: consider another way to parse section titles with better depth.
-		#TODO: strip '' from sections if BOLD
-
+		# Get and parse section titles.
 		sections = []
 		header1s, self.content = self.get_occurrences(r"[^=]={2}([^=].*?)={2}", self.content)
 		header2s, self.content = self.get_occurrences(r"[^=]={3}([^=].*?)={3}", self.content)
@@ -252,7 +237,7 @@ class ProcessRevisions:
 		return sections
 
 	def proper_formatting(self, input_string, punct=True):
-		# Add end punct to lines, strip quotation marks, and tokenize
+		# Add end punct, strip quotation marks, and tokenize.
 		if punct:
 			if input_string[-1] not in string.punctuation: 
 				input_string += "."
@@ -263,8 +248,7 @@ class ProcessRevisions:
 		return output_string
 
 	def parse_text(self):
-		# Clean remaining content for tables, noise and image markup. Also cleans italics markup.
-
+		# Get and remove tables and markup from content.
 		clean_content = []
 		italics_markup, self.content = self.get_occurrences(r"\'{2,}", self.content)
 
@@ -279,6 +263,8 @@ class ProcessRevisions:
 		self.content = ' '.join([w for w in clean_content])
 
 	def parse_revisions(self):
+		# Input: revisions from Wikipedia page. 
+		# Output: dictionary with extracted page elements per revision.
 		data = OrderedDict()
 
 		if self.revisions == None:return None
