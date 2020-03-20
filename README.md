@@ -1,8 +1,4 @@
-WikiRevParser
-=========
-
-
-**WikiRevParser** is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
+WikiRevParser is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
 
 The library extracts and parses Wikipedia revision histories from a language-page title pair and outputs clean, accessible data per timestamp in the revision history. 
 You can use this library to access the development of references of a page, analyze the content or images over time, compare the tables of content across languages, create editor networks, and much more.
