@@ -1,17 +1,17 @@
+# -*- coding: utf-8 -*-
 import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="example-pkg-YOUR-USERNAME-HERE", # Replace with your own username
+    name="wikirevparser", # Replace with your own username
     version="0.0.1",
-    author="Example Author",
-    author_email="author@example.com",
-    description="A small example package",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    author="Anna Jørgensen",
+    author_email="anka.jorgensen@gmail.com",
+    description="Wikipedia revision history parser for Python",
+    long_description=local_file('README.rst').read(),
+    url="https://github.com/ajoer/WikiRevisionParser",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

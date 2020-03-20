@@ -1,8 +1,6 @@
 WikiRevParser
 =========
 
-[![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
-
 
 **WikiRevParser** is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
 
@@ -22,22 +20,13 @@ Documentation
 License
 -------
 
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0
-International License][cc-by-sa].
-
-[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
-
-[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
-[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
-[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
-
-See the `LICENSE file <https://github.com/ajoer/WikiRevParser/LICENSE>`__ for
-full details.
+This work is MIT licensed. See the [LICENSE file] (https://github.com/ajoer/WikiRevParser/LICENSE) for full details.
 
 Credits
 -------
 
--  @goldsmith for the Python Wikipidia API wrapper [Wikipedia](https://github.com/goldsmith/Wikipedia).
+-  @goldsmith for the Python Wikipedia API wrapper [Wikipedia](https://github.com/goldsmith/Wikipedia).
 -  The `Wikimedia Foundation <http://wikimediafoundation.org/wiki/Home>`__ and all Wikipedians for creating and maintaining the data.
+- This work has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No. 812997.
 
 
