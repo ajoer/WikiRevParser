@@ -1,4 +1,5 @@
 README.md
+README.rst
 setup.py
 wikirevparser/__init__.py
 wikirevparser/wikirevparser.py

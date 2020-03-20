@@ -1,4 +1,4 @@
-#WikiRevParser
+# WikiRevParser
 
 **WikiRevParser** is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
 
@@ -8,22 +8,42 @@ You can use this library to access the development of references of a page, anal
 The WikiRevParser relies on our forked and modified [version](https://github.com/ajoer/Wikipedia) of the Python [Wikipedia](https://github.com/goldsmith/Wikipedia) library, which in turn wraps the [MediaWiki API](https://www.mediawiki.org/wiki/API) for quick and easy access to Wikipedia data.
 Our modified [version](https://github.com/ajoer/Wikipedia) of the Wikipedia library extracts and returns the entire revision history of a page.
 
-Installation
-------------
+## Installation
 
-Documentation
--------------
+To install WikiRevParser, simply run:
+
+::
+
+$ pip install wikirevparser
+
+... or clone the repository on [GitHub](https://github.com/ajoer/WikiRevParser).
+
+The WikiRevParser is compatible with Python 3.4+, compatibility with earlier versions of Python has not been tested yet.
 
 
-License
--------
+## Example
+
+To get the revision history for the page on [knitting](https://en.wikipedia.org/wiki/Knitting) on the English Wikipedia, run:
+
+	$ from WikiRevParser.wikirevparser import wikirevparser
+	$ parser_instance = wikirevparser.ProcessRevisions("en", "Knitting") 
+	$ parser_instance.wikipedia_page()
+	$ data = parser_instance.parse_revisions()
+
+And you can check when the first and last edit was made, who has edited the most on the page and  
+
+
+## Documentation
+
+Read the docs at (https://wikirevparser.readthedocs.io/en/latest/)
+
+## License
 
 This work is MIT licensed. See the [LICENSE file](https://github.com/ajoer/WikiRevParser/LICENSE) for full details.
 
-Credits
--------
+## Credits
 
--  @goldsmith for the Python Wikipedia API wrapper [Wikipedia](https://github.com/goldsmith/Wikipedia).
--  The [Wikimedia Foundation](http://wikimediafoundation.org/wiki/Home) and all Wikipedians for creating and maintaining the data.
+- @goldsmith for the Python Wikipedia API wrapper [Wikipedia](https://github.com/goldsmith/Wikipedia).
+- The [Wikimedia Foundation](http://wikimediafoundation.org/wiki/Home) and all Wikipedians for creating and maintaining the data.
 - This work has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No. 812997.
 

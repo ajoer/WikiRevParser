@@ -1,4 +1,4 @@
-Metadata-Version: 1.2
+Metadata-Version: 2.1
 Name: wikirevparser
 Version: 0.0.1
 Summary: Wikipedia revision history parser for Python
@@ -6,9 +6,7 @@ Home-page: https://github.com/ajoer/WikiRevisionParser
 Author: Anna Jørgensen
 Author-email: anka.jorgensen@gmail.com
 License: UNKNOWN
-Description: WikiRevParser
-        =========
-        
+Description: # WikiRevParser
         
         **WikiRevParser** is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
         
@@ -18,25 +16,19 @@ Description: WikiRevParser
         The WikiRevParser relies on our forked and modified [version](https://github.com/ajoer/Wikipedia) of the Python [Wikipedia](https://github.com/goldsmith/Wikipedia) library, which in turn wraps the [MediaWiki API](https://www.mediawiki.org/wiki/API) for quick and easy access to Wikipedia data.
         Our modified [version](https://github.com/ajoer/Wikipedia) of the Wikipedia library extracts and returns the entire revision history of a page.
         
-        Installation
-        ------------
+        ## Installation
         
-        Documentation
-        -------------
+        ## Documentation
         
-        
-        License
-        -------
+        ## License
         
         This work is MIT licensed. See the [LICENSE file](https://github.com/ajoer/WikiRevParser/LICENSE) for full details.
         
-        Credits
-        -------
+        ## Credits
         
-        -  @goldsmith for the Python Wikipedia API wrapper [Wikipedia](https://github.com/goldsmith/Wikipedia).
-        -  The [Wikimedia Foundation](http://wikimediafoundation.org/wiki/Home) and all Wikipedians for creating and maintaining the data.
+        - @goldsmith for the Python Wikipedia API wrapper [Wikipedia](https://github.com/goldsmith/Wikipedia).
+        - The [Wikimedia Foundation](http://wikimediafoundation.org/wiki/Home) and all Wikipedians for creating and maintaining the data.
         - This work has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No. 812997.
-        
         
         
 Platform: UNKNOWN
@@ -44,3 +36,4 @@ Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.6
+Description-Content-Type: text/markdown
