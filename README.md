@@ -10,13 +10,9 @@ Our modified [version](https://github.com/ajoer/Wikipedia) of the Wikipedia libr
 
 ## Installation
 
-To install WikiRevParser, simply run:
+To install WikiRevParser, you can clone the repository on [GitHub](https://github.com/ajoer/WikiRevParser) or simply run:
 
-::
-
-$ pip install wikirevparser
-
-... or clone the repository on [GitHub](https://github.com/ajoer/WikiRevParser).
+	>>> pip install wikirevparser
 
 The WikiRevParser is compatible with Python 3.4+, compatibility with earlier versions of Python has not been tested yet.
 
@@ -25,13 +21,33 @@ The WikiRevParser is compatible with Python 3.4+, compatibility with earlier ver
 
 To get the revision history for the page on [knitting](https://en.wikipedia.org/wiki/Knitting) on the English Wikipedia, run:
 
-	$ from WikiRevParser.wikirevparser import wikirevparser
-	$ parser_instance = wikirevparser.ProcessRevisions("en", "Knitting") 
-	$ parser_instance.wikipedia_page()
-	$ data = parser_instance.parse_revisions()
+	>>> from WikiRevParser.wikirevparser import wikirevparser
+	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Knitting") 
+	>>> parser_instance.wikipedia_page()
+	>>> data = parser_instance.parse_revisions()
 
-And you can check when the first and last edit was made, who has edited the most on the page and  
+And you can access information like these:
 
+When and by whom was the first and last edit made?
+
+	>>> edits = list(data.items())
+	>>> first_timepoint = edits[0][0]
+	>>> first_editor = edits[0][1]["user"]
+	>>> last_timepoint = edits[-1][0]
+	>>> last_editor = edits[-1][1]["user"]
+	>>> print("%s first edited the page at %s, and it was last edited by %s at %s" % ( first_editor, first_timepoint, last_editor, last_timepoint))
+	# JavaHurricane first edited the page at 2020-03-18T12:41:39Z, and it was last edited by Janet Davis at 2001-04-07T02:39:27Z
+
+Who has edited the page the most?
+
+	>>> from collections import Counter
+	>>> users = Counter()
+	>>> for timestamp in data:
+	>>>		users[data[timestamp]["user"]] += 1
+	>>> print("%s has edited the page the most, all of %s times!" % (most_editing, number_edits))
+	# WillowW has edited the page the most, all of 93 times!
+
+You could also investigate the use of images, the changes in tables of content, analyse differences between different language versions, and more. 
 
 ## Documentation
 
