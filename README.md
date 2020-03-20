@@ -31,12 +31,13 @@ And you can access information like these:
 When and by whom was the first and last edit made?
 
 	>>> edits = list(data.items())
-	>>> first_timepoint = edits[0][0]
-	>>> first_editor = edits[0][1]["user"]
-	>>> last_timepoint = edits[-1][0]
-	>>> last_editor = edits[-1][1]["user"]
-	>>> print("%s first edited the page at %s, and it was last edited by %s at %s" % ( first_editor, first_timepoint, last_editor, last_timepoint))
-	# JavaHurricane first edited the page at 2020-03-18T12:41:39Z, and it was last edited by Janet Davis at 2001-04-07T02:39:27Z
+	>>> first_timepoint = edits[-1][0]
+	>>> first_editor = edits[-1][1]["user"]
+	>>> last_timepoint = edits[0][0]
+	>>> last_editor = edits[0][1]["user"]
+	>>> print("%s first edited the page at %s, \n and it was last edited by %s at %s." % ( first_editor, first_timepoint, last_editor, last_timepoint))
+	# Janet Davis first edited the page at 2001-04-07T02:39:27Z, 
+	# and it was last edited by JavaHurricane at 2020-03-18T12:41:39Z.
 
 Who has edited the page the most?
 
