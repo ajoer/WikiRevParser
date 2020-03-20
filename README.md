@@ -44,7 +44,7 @@ Who has edited the page the most?
 	>>> from collections import Counter
 	>>> users = Counter()
 	>>> for timestamp in data:
-	>>>		users[data[timestamp]["user"]] += 1
+	>>>	  users[data[timestamp]["user"]] += 1
 	>>> print("%s has edited the page the most, all of %s times!" % (most_editing, number_edits))
 	# WillowW has edited the page the most, all of 93 times!
 
