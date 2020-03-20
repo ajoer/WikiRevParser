@@ -10,7 +10,7 @@ setuptools.setup(
     author="Anna Jørgensen",
     author_email="anka.jorgensen@gmail.com",
     description="Wikipedia revision history parser for Python",
-    long_description=local_file('README.rst').read(),
+    long_description=long_description,
     url="https://github.com/ajoer/WikiRevisionParser",
     packages=setuptools.find_packages(),
     classifiers=[
