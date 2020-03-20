@@ -128,7 +128,6 @@ class ProcessRevisions:
 				# Images
 				occurrence = re.search(r"(:|=)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
 				if not occurrence: 
-					# images can be begin line, no markup
 					occurrence = re.search(r"(^)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
 				try:
 					image_title, image_extension = occurrence.group(2,3)
@@ -144,21 +143,19 @@ class ProcessRevisions:
 				self.content = self.content.replace(line, "")
 
 				# Captions
-				# Some languages (e.g. EN) make use of this structure for captions: "alt=British soldiers....". They can have links in the caption.
 				if "|alt=" in line:
 
 					elements = line.split("|alt=")[-1].split("|")[1:]
 					caption = '|'.join(elements)[:-2]
 					self.content = self.content.replace(line, caption)
 					
-				# Other languages (e.g. NL) do not...
 				else:
 					caption = re.search(r"thumb\|(.*)\]\]", line, re.IGNORECASE)
 					if not caption: continue 
 					caption = caption.group(1)
 					if "px" in caption or caption.startswith("{{legend"): continue
 
-				# Get links and remove from caption
+				# Links
 				links, texts = self.get_links(caption)
 
 				for link, text in zip(links, texts):
@@ -193,9 +190,10 @@ class ProcessRevisions:
 					print("\tThere is an unexpected number of elements in this link:\t", link)
 					continue
 
-				# language links
+				# Language links
 				if len(l) != 2 and not l.islower():
-					# categories
+					
+					# Categories
 					categories.append(category)
 
 				self.content = self.replace_link(self.content, link, "")
@@ -257,7 +255,6 @@ class ProcessRevisions:
 			if len(line) == 0: continue
 			if line[0] in string.punctuation or "px" in line: continue
 
-			# Add end punct to lines
 			clean_content.append(self.proper_formatting(line))
 
 		self.content = ' '.join([w for w in clean_content])
