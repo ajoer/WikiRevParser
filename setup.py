@@ -1,16 +1,28 @@
 # -*- coding: utf-8 -*-
 import setuptools
 
+import codecs
+import os
+import re
+
+
+def local_file(file):
+  return codecs.open(
+    os.path.join(os.path.dirname(__file__), file), 'r', 'utf-8'
+  )
+
 install_reqs = [
   line.strip()
   for line in local_file('requirements.txt').readlines()
   if line.strip() != ''
 ]
+
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="wikirevparser",
+    name="WikiRevParser",
     version="0.0.1",
     author="Anna Jørgensen",
     author_email="anka.jorgensen@gmail.com",
