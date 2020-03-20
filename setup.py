@@ -10,8 +10,7 @@ setuptools.setup(
     author="Anna Jørgensen",
     author_email="anka.jorgensen@gmail.com",
     description="Wikipedia revision history parser for Python",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description="WikiRevParser is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.",
     url="https://github.com/ajoer/WikiRevisionParser",
     packages=setuptools.find_packages(),
     classifiers=[
