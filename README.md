@@ -3,10 +3,45 @@
 **WikiRevParser** is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
 
 The library extracts and parses Wikipedia revision histories from a language-page title pair and outputs clean, accessible data per timestamp in the revision history. 
-You can use this library to access the development of references of a page, analyze the content or images over time, compare the tables of content across languages, create editor networks, and much more.
+You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more.
 
-The WikiRevParser relies on our forked and modified [version](https://github.com/ajoer/Wikipedia) of the Python [Wikipedia](https://github.com/goldsmith/Wikipedia) library, which in turn wraps the [MediaWiki API](https://www.mediawiki.org/wiki/API) for quick and easy access to Wikipedia data.
-Our modified [version](https://github.com/ajoer/Wikipedia) of the Wikipedia library extracts and returns the entire revision history of a page.
+## Example
+
+To get the revision history for the page on [Marie Curie](https://en.wikipedia.org/wiki/Marie_Curie) on the English Wikipedia, run:
+
+	>>> from wikirevparser import wikirevparser
+	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Marie Curie") 
+	>>> parser_instance.wikipedia_page()
+	>>> data = parser_instance.parse_revisions()
+
+And you can access information like these:
+
+**about links:**
+
+	>>> edits = list(data.items())
+	>>> first_links = edits[-1][1]["links"]
+	>>> latest_links = edits[0][1]["links"]
+	>>> print("Number of links in the first edit: %d." % len(first_links))
+	Number of links in the first edit: 1. 
+	>>> print("A link in the first edit: %s." % first_links[0])
+	A link in the first edit: pierre and marie curie. 
+	>>> print("Number of links in the latest edit: %d." % len(latest_links))
+	Number of links in the latest edit: 320. 
+	>>> print("A link in the latest edit: %s." % latest_links[0])
+	A link in the first edit: congress poland.
+	
+**about editors:**
+
+	>>> from collections import Counter
+	>>> editors = Counter()
+	>>> for timestamp in data:
+	>>>	  editors[data[timestamp]["user"]] += 1
+	>>> most_frequent = editors.most_common(1)[0]
+	>>> editor, edits = most_frequent[0], most_frequent[1]
+ 	>>> print("%s has edited the page the most, all of %d times (%d percent)!" % (editor, edits, (edits/len(data)*100)))
+	Nihil novi has edited the page the most, all of 619 times (13 percent)!
+
+You could also investigate the use of images, the changes in tables of content, analyse differences across different language versions, and much, much more. 
 
 ## Installation
 
@@ -14,45 +49,23 @@ To install WikiRevParser, you can clone the repository on [GitHub](https://githu
 
 	>>> pip install wikirevparser
 
-The WikiRevParser is compatible with Python 3.4+, compatibility with earlier versions of Python has not been tested yet.
 
+## Requirements
 
-## Example
+The WikiRevParser requires Python 3+.
 
-To get the revision history for the page on [knitting](https://en.wikipedia.org/wiki/Knitting) on the English Wikipedia, run:
+You'll also need a few common Python libraries as well as our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page. 
 
-	>>> from WikiRevParser.wikirevparser import wikirevparser
-	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Knitting") 
-	>>> parser_instance.wikipedia_page()
-	>>> data = parser_instance.parse_revisions()
+Run the following to install all requirements needed:
 
-And you can access information like these:
+	>>> python3 install -r requirements.txt
+	>>> git clone git@github.com:ajoer/Wikipedia.git
 
-When and by whom was the first and last edit made?
-
-	>>> edits = list(data.items())
-	>>> first_timepoint = edits[-1][0]
-	>>> first_editor = edits[-1][1]["user"]
-	>>> last_timepoint = edits[0][0]
-	>>> last_editor = edits[0][1]["user"]
-	>>> print("%s first edited the page at %s, \n and it was last edited by %s at %s." % ( first_editor, first_timepoint, last_editor, last_timepoint))
-	# Janet Davis first edited the page at 2001-04-07T02:39:27Z, 
-	# and it was last edited by JavaHurricane at 2020-03-18T12:41:39Z.
-
-Who has edited the page the most?
-
-	>>> from collections import Counter
-	>>> users = Counter()
-	>>> for timestamp in data:
-	>>>	  users[data[timestamp]["user"]] += 1
-	>>> print("%s has edited the page the most, all of %s times!" % (most_editing, number_edits))
-	# WillowW has edited the page the most, all of 93 times!
-
-You could also investigate the use of images, the changes in tables of content, analyse differences between different language versions, and more. 
+The first command installs all requirements specified in the [requirements.txt](https://github.com/ajoer/WikiRevParser/requirements.txt) file, and the second command clones our version of the [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) needed for revision history extraction.
 
 ## Documentation
 
-Read the docs at (https://wikirevparser.readthedocs.io/en/latest/)
+Read the docs at [readthedocs.io](https://wikirevparser.readthedocs.io/en/latest/)
 
 ## License
 
