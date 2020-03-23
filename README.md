@@ -47,7 +47,7 @@ You could also investigate the use of images, the changes in tables of content, 
 
 To install WikiRevParser, you can clone the repository on [GitHub](https://github.com/ajoer/WikiRevParser) or simply run:
 
-	>>> pip install wikirevparser
+	>>> pip3 install wikirevparser
 
 
 ## Requirements
