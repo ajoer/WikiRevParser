@@ -43,15 +43,24 @@ You could also investigate the use of images, the changes in tables of content, 
 To install WikiRevParser, run:
 
 	$ pip3 install wikirevparser
+	
+You can also clone the [Github repository](https://github.com/ajoer/WikiRevParser):
+
+	$ git clone git@github.com:ajoer/WikiRevParser.git
 
 ## Requirements
 
 The WikiRevParser requires Python 3+.
 
-Beside from a few common Python libraries that are automatically installed with the ``pip3`` command above (you can see which in the  [requirements.txt](https://github.com/ajoer/WikiRevParser/requirements.txt) file), you'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page: 
+You'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page: 
 
 	$ git clone git@github.com:ajoer/Wikipedia.git
-	
+
+If you used ``git`` rather than ``pip3``, you'll need to run the following as well to install the necessary dependencies (see which in the [requirements](https://github.com/ajoer/WikiRevParser/requirements.txt) file):
+
+	$ cd WikiRevParser
+	$ pip3 install -r requirements.txt
+
 ## Documentation
 
 Read the docs at [readthedocs.io](https://wikirevparser.readthedocs.io/en/latest/)
