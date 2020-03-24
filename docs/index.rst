@@ -1,3 +1,4 @@
+.. _index:
 .. WikiRevParser documentation master file, created by
    sphinx-quickstart on Tue Mar 24 14:00:45 2020.
    You can adapt this file completely to your liking, but it should at least
@@ -18,7 +19,7 @@ You can use the library for researching information structures, sentiment develo
 Go to the :ref:`quickstart` to start using the WikiRevParser now or check out the detailed :ref:`documentation`.
 
 Content
-=======
+*******
 
 * :ref:`quickstart`
 * :ref:`documentation`

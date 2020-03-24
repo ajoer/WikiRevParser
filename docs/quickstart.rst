@@ -34,7 +34,7 @@ See see :ref:`documentation` for more information on the functionalities of the 
 And see FAQ or file a bug if you run into issues `here <https://github.com/ajoer/WikiRevParser/issues>`_!
 
 Content
-=======
+*******
 
 * :ref:`index`
 * :ref:`documentation`
