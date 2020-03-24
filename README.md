@@ -30,7 +30,8 @@ To get the revision history for the page on [Marie Curie](https://en.wikipedia.o
 
 	>>> from wikirevparser import wikirevparser
 	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Marie Curie") 
-	>>> data = parser_instance.wikipedia_page().parse_revisions()
+	>>> parser_instance.wikipedia_page()
+	>>> data = parser_instance.parse_revisions()
 
 **Get information about the development of links:**
 
