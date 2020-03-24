@@ -22,6 +22,7 @@ And you can access information like these:
 	>>> first_links = edits[-1][1]["links"]
 	>>> latest_links = edits[0][1]["links"]
 	>>> print("The only link in the first version was '%s'. \nThere were %d links in the latest version, e.g. '%s'." % (first_links[0], len(latest_links), latest_links[0]))
+	
 	The only link in the first version was 'pierre and marie curie'.
 	There were 320 links in the latest version, e.g. 'congress poland'.
 	
@@ -33,16 +34,16 @@ And you can access information like these:
 	>>>	  editors[data[timestamp]["user"]] += 1
 	>>> most_frequent = editors.most_common(1)[0]
  	>>> print("%s has edited the page the most, all of %d times (%d percent)!" % (most_frequent[0], most_frequent[1], (most_frequent[1]/len(data)*100)))
+	
 	Nihil novi has edited the page the most, all of 619 times (13 percent)!
 
 You could also investigate the use of images, the changes in tables of content, analyse differences across different language versions, and much, much more. 
 
 ## Installation
 
-To install WikiRevParser, you can clone the repository on [GitHub](https://github.com/ajoer/WikiRevParser) or simply run:
+To install WikiRevParser, run:
 
-	>>> pip3 install wikirevparser
-
+	$ pip3 install wikirevparser
 
 ## Requirements
 
@@ -50,14 +51,11 @@ The WikiRevParser requires Python 3+.
 
 You'll also need a few common Python libraries as well as our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page. 
 
-Run the following to install all requirements needed:
+The only un the following to clone our version of the Wikipedia API wrapper:
 
-	>>> python3 install -r requirements.txt
-	>>> git clone git@github.com:ajoer/Wikipedia.git
+	$ git clone git@github.com:ajoer/Wikipedia.git
 
-The first command installs all requirements specified in the [requirements.txt](https://github.com/ajoer/WikiRevParser/requirements.txt) file, and the second command clones our version of the [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) needed for revision history extraction.
-
-## Documentation
+The rest of the requirements should have been installed automatically, but if something went wrong, check that you fulfill the requirements in the [requirements.txt](https://github.com/ajoer/WikiRevParser/requirements.txt) file## Documentation
 
 Read the docs at [readthedocs.io](https://wikirevparser.readthedocs.io/en/latest/)
 
