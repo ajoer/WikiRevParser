@@ -13,6 +13,10 @@ To get the revision history for the page on [Marie Curie](https://en.wikipedia.o
 	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Marie Curie") 
 	>>> data = parser_instance.wikipedia_page().parse_revisions()
 
+NB: if you've cloned the library from ``Github``, you'll need to import the library like this instead:
+
+	>>> from WikiRevParser.wikirevparser import wikirevparser
+
 And you can access information like these:
 
 **About links:**
@@ -56,7 +60,7 @@ You'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wi
 
 	$ git clone git@github.com:ajoer/Wikipedia.git
 
-If you used ``git`` rather than ``pip3``, you'll need to run the following as well to install the necessary dependencies (see which in the [requirements](https://github.com/ajoer/WikiRevParser/requirements.txt) file):
+If you used ``git`` rather than ``pip3`` for installation, you'll need to run the following as well to install the necessary dependencies (see which in the [requirements](https://github.com/ajoer/WikiRevParser/requirements.txt) file):
 
 	$ cd WikiRevParser
 	$ pip3 install -r requirements.txt
