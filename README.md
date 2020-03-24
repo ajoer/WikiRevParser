@@ -4,19 +4,18 @@
 
 The library extracts and parses Wikipedia revision histories from a language-page title pair and outputs clean, accessible data per timestamp in the revision history. 
 You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more.
-
+	
 ## Example
 
 To get the revision history for the page on [Marie Curie](https://en.wikipedia.org/wiki/Marie_Curie) on the English Wikipedia, run:
 
 	>>> from wikirevparser import wikirevparser
 	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Marie Curie") 
-	>>> parser_instance.wikipedia_page()
-	>>> data = parser_instance.parse_revisions()
+	>>> data = parser_instance.wikipedia_page().parse_revisions()
 
 And you can access information like these:
 
-**about links:**
+**About links:**
 
 	>>> edits = list(data.items())
 	>>> first_links = edits[-1][1]["links"]
@@ -26,7 +25,7 @@ And you can access information like these:
 	The only link in the first version was 'pierre and marie curie'.
 	There were 320 links in the latest version, e.g. 'congress poland'.
 	
-**about editors:**
+**About editors:**
 
 	>>> from collections import Counter
 	>>> editors = Counter()
@@ -49,13 +48,11 @@ To install WikiRevParser, run:
 
 The WikiRevParser requires Python 3+.
 
-You'll also need a few common Python libraries as well as our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page. 
-
-The only un the following to clone our version of the Wikipedia API wrapper:
+Beside from a few common Python libraries that are automatically installed with the ``pip3`` command above (you can see which in the  [requirements.txt](https://github.com/ajoer/WikiRevParser/requirements.txt) file), you'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page: 
 
 	$ git clone git@github.com:ajoer/Wikipedia.git
-
-The rest of the requirements should have been installed automatically, but if something went wrong, check that you fulfill the requirements in the [requirements.txt](https://github.com/ajoer/WikiRevParser/requirements.txt) file## Documentation
+	
+## Documentation
 
 Read the docs at [readthedocs.io](https://wikirevparser.readthedocs.io/en/latest/)
 
