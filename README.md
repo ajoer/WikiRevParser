@@ -21,14 +21,9 @@ And you can access information like these:
 	>>> edits = list(data.items())
 	>>> first_links = edits[-1][1]["links"]
 	>>> latest_links = edits[0][1]["links"]
-	>>> print("Number of links in the first edit: %d." % len(first_links))
-	Number of links in the first edit: 1. 
-	>>> print("A link in the first edit: %s." % first_links[0])
-	A link in the first edit: pierre and marie curie. 
-	>>> print("Number of links in the latest edit: %d." % len(latest_links))
-	Number of links in the latest edit: 320. 
-	>>> print("A link in the latest edit: %s." % latest_links[0])
-	A link in the first edit: congress poland.
+	>>> print("The only link in the first version was '%s'. \nThere were %d links in the latest version, e.g. '%s'." % (first_links[0], len(latest_links), latest_links[0]))
+	The only link in the first version was 'pierre and marie curie'.
+	There were 320 links in the latest version, e.g. 'congress poland'.
 	
 **about editors:**
 
@@ -37,8 +32,7 @@ And you can access information like these:
 	>>> for timestamp in data:
 	>>>	  editors[data[timestamp]["user"]] += 1
 	>>> most_frequent = editors.most_common(1)[0]
-	>>> editor, edits = most_frequent[0], most_frequent[1]
- 	>>> print("%s has edited the page the most, all of %d times (%d percent)!" % (editor, edits, (edits/len(data)*100)))
+ 	>>> print("%s has edited the page the most, all of %d times (%d percent)!" % (most_frequent[0], most_frequent[1], (most_frequent[1]/len(data)*100)))
 	Nihil novi has edited the page the most, all of 619 times (13 percent)!
 
 You could also investigate the use of images, the changes in tables of content, analyse differences across different language versions, and much, much more. 

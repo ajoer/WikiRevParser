@@ -12,17 +12,17 @@ print(install_reqs)
 
 setuptools.setup(
     name="wikirevparser",
-    version="0.0.4",
+    version="0.0.5",
     author="Anna Jørgensen",
     author_email="anka.jorgensen@gmail.com",
     description="Wikipedia revision history parser for Python",
-    url="https://github.com/ajoer/WikiRevisionParser",
+    url="https://github.com/ajoer/WikiRevParser",
     license = "MIT",
     keywords = "python wikipedia API",
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires = install_reqs,
-    packages=['wikirevparser'], # setuptools.find_packages(),
+    packages=['wikirevparser'],
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
