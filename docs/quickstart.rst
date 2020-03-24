@@ -10,7 +10,7 @@ Install WikiRevParser
 
 ::
 
-	$ pip3 install wikirevparser
+	pip3 install wikirevparser
 
 Let's try it out and get the changes in page size for the article on Marie Curie over time. 
 
@@ -33,10 +33,10 @@ This takes a language code and a Wikipedia page title as input:
 See see :ref:`documentation` for more information on the functionalities of the library! 
 And see FAQ or file a bug if you run into issues `here <https://github.com/ajoer/WikiRevParser/issues>`_!
 
-Indices and tables
-==================
+Content
+=======
 
-* :ref:`quickstart`
+* :ref:`index`
 * :ref:`documentation`
 * :ref:`search`
 

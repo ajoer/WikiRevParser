@@ -20,8 +20,8 @@ How to install?
 Installing the WikiRevParser is easy with ``pip3``, but you'll also need to clone our forked version of the `Wikipedia API wrapper <https://github.com/ajoer/Wikipedia>`_ from Github, since the WikiRevParser relies on that for extracting revision histories. 
 
 ::
-	$ pip3 install wikirevparser
-	$ git clone git@github.com:ajoer/Wikipedia.git
+	pip3 install wikirevparser
+	git clone git@github.com:ajoer/Wikipedia.git
 
 Read more on the `PyPI <https://pypi.org/project/wikirevparser/>`_ page of the library. 
 You can also find more information about the Wikipedia API wrapper on our version's `Github page <https://github.com/ajoer/Wikipedia>`_, or on the `readthedocs page <https://wikipedia.readthedocs.io/en/latest/>`_ of the original (shoutout to @goldsmith).
@@ -29,12 +29,20 @@ You can also find more information about the Wikipedia API wrapper on our versio
 You can of course also clone the `Github repository <https://github.com/ajoer/WikiRevParser>`_, but then you'll also need to install the requirements(see which in the `requirements <https://github.com/ajoer/WikiRevParser/requirements.txt>`_ file):
 
 ::
-	$ git clone git@github.com:ajoer/WikiRevParser.git
-	$ cd WikiRevParser
-	$ pip3 install -r requirements.txt
+	git clone git@github.com:ajoer/WikiRevParser.git
+	cd WikiRevParser
+	pip3 install -r requirements.txt
 
 
 How to use?
 ***********
+
+Content
+=======
+
+* :ref:`index`
+* :ref:`quickstart`
+* :ref:`search`
+
 
 

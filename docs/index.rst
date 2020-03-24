@@ -17,8 +17,8 @@ You can use the library for researching information structures, sentiment develo
 
 Go to the :ref:`quickstart` to start using the WikiRevParser now or check out the detailed :ref:`documentation`.
 
-Indices and tables
-==================
+Content
+=======
 
 * :ref:`quickstart`
 * :ref:`documentation`
