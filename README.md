@@ -17,9 +17,7 @@ NB: if you've cloned the library from ``Github``, you'll need to import the libr
 
 	>>> from WikiRevParser.wikirevparser import wikirevparser
 
-And you can access information like these:
-
-**About links:**
+**Get information about the development of links:**
 
 	>>> edits = list(data.items())
 	>>> first_links = edits[-1][1]["links"]
@@ -29,7 +27,7 @@ And you can access information like these:
 	The only link in the first version was 'pierre and marie curie'.
 	There were 320 links in the latest version, e.g. 'congress poland'.
 	
-**About editors:**
+**Get information about editors:**
 
 	>>> from collections import Counter
 	>>> editors = Counter()
