@@ -10,6 +10,10 @@ You can use this library to access the development of references of a page, anal
 To install WikiRevParser, run:
 
 	$ pip3 install wikirevparser
+	
+You can also clone the [Github repository](https://github.com/ajoer/WikiRevParser):
+
+	$ git clone git@github.com:ajoer/WikiRevParser.git
 
 ## Requirements
 
@@ -31,6 +35,10 @@ To get the revision history for the page on [Marie Curie](https://en.wikipedia.o
 	>>> from wikirevparser import wikirevparser
 	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Marie Curie") 
 	>>> data = parser_instance.wikipedia_page().parse_revisions()
+
+NB: if you've cloned the library from ``Github``, you'll need to import the library like this instead:
+
+	>>> from WikiRevParser.wikirevparser import wikirevparser
 
 **Get information about the development of links:**
 
