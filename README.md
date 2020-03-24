@@ -5,6 +5,29 @@
 The library extracts and parses Wikipedia revision histories from a language-page title pair and outputs clean, accessible data per timestamp in the revision history. 
 You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more.
 	
+## Installation
+
+To install WikiRevParser, run:
+
+	$ pip3 install wikirevparser
+	
+You can also clone the [Github repository](https://github.com/ajoer/WikiRevParser):
+
+	$ git clone git@github.com:ajoer/WikiRevParser.git
+
+## Requirements
+
+The WikiRevParser requires Python 3+.
+
+You'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page: 
+
+	$ git clone git@github.com:ajoer/Wikipedia.git
+
+If you used ``git`` rather than ``pip3`` for installation, you'll need to run the following as well to install the necessary dependencies (see which in the [requirements](https://github.com/ajoer/WikiRevParser/requirements.txt) file):
+
+	$ cd WikiRevParser
+	$ pip3 install -r requirements.txt
+
 ## Example
 
 To get the revision history for the page on [Marie Curie](https://en.wikipedia.org/wiki/Marie_Curie) on the English Wikipedia, run:
@@ -39,29 +62,6 @@ NB: if you've cloned the library from ``Github``, you'll need to import the libr
 	Nihil novi has edited the page the most, all of 619 times (13 percent)!
 
 You could also investigate the use of images, the changes in tables of content, analyse differences across different language versions, and much, much more. 
-
-## Installation
-
-To install WikiRevParser, run:
-
-	$ pip3 install wikirevparser
-	
-You can also clone the [Github repository](https://github.com/ajoer/WikiRevParser):
-
-	$ git clone git@github.com:ajoer/WikiRevParser.git
-
-## Requirements
-
-The WikiRevParser requires Python 3+.
-
-You'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page: 
-
-	$ git clone git@github.com:ajoer/Wikipedia.git
-
-If you used ``git`` rather than ``pip3`` for installation, you'll need to run the following as well to install the necessary dependencies (see which in the [requirements](https://github.com/ajoer/WikiRevParser/requirements.txt) file):
-
-	$ cd WikiRevParser
-	$ pip3 install -r requirements.txt
 
 ## Documentation
 
