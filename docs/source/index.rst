@@ -1,3 +1,4 @@
+.. _home:
 .. WikiRevParser documentation master file, created by
    sphinx-quickstart on Wed Mar 25 15:03:01 2020.
    You can adapt this file completely to your liking, but it should at least
@@ -29,16 +30,14 @@ If you want more information about the WikiRevParser library, see :ref:`document
 
 And see `FAQ or file a bug <https://github.com/ajoer/WikiRevParser/issues>`_ if you run into issues!
 
+Content
+*******
 
 .. toctree::
-   :maxdepth: 2
-   
-Indices and tables
-==================
+   :maxdepth: 1
 
-* :ref:`documentation`
-* :ref:`examples `
-* :ref:`search`
+   documentation
+   examples
 
 
 
