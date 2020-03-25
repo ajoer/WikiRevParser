@@ -3,15 +3,42 @@
 Documentation
 =============
 
+What is it?
+***********
+
+**WikiRevParser** is a Python library that parses Wikipedia revision histories. It allows you to analyse the development of pages on Wikipedia over time and across language versions.
+
+Each Wikipedia page has a revision history with a snapshot of the page at each revision point. 
+This data is a great resource for conducting temporal and/or cross-lingual analysis, but the format of the revision histories at extraction are unstructured and noisy, which complicates any analysis. 
+The WikiRevParser solves this issue by extracting the important aspects of the unstructured data from each revision and neatly organizing these in an easy-to-use JSON format. 
+
+The output of the WikiRevParser is a dictionary where each key is a timepoint and each value is a dictionary of the following datatypes: 
+
+* image captions: []
+* categories: []
+* content: str
+* images: []
+* links: []
+* sections: [[], [], []]
+* reference types: Counter()
+* reference top level domains: Counter()
+* reference urls: []
+* user: str
+
+The WikiRevParser works for all 300+ Wikipedia language versions independently of markup style, alphabet and size!
+
+You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more. 
+See :ref:`examples` for ideas!
+
 How does it work?
 *****************
 
 The WikiRevParser parses Wikipedia revision histories and outputs clean, accessible data for each timestamp in the revision history. 
 
-The parser takes a language code and a page title as input and relies on our re-worked version of the Wikipedia API wrapper for extracting the revision history of the page. 
-After the revision history of the page has been extracted, the parser extracts cleans and pre-processes the revision history of each timestamp. This process is essential for working with Wikipedia revision histories, as the ourput of the API call for each revision is a noisy and un-organised string. 
-The parser extracts salient information from the string, such as images, section titles, references, editor IDs and content, and cleans each     
-You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more.
+The parser takes a language code and a page title as input and relies on our re-worked version of the `Wikipedia API wrapper <https://github.com/ajoer/Wikipedia>`_ for extracting the revision history of the page. 
+After the revision history of the page has been extracted, the parser extracts cleans and pre-processes the revision history of each timestamp. This process is essential for working with Wikipedia revision histories, as the output of the API call is a noisy and unstructured string for each revision. 
+For each timestamp in the revision history, the parser extracts the salient information from the unstructured string, such as images, references, and editor IDs (see all elements above), and cleans the content from tables and markup.
+The output is clean, easy to use structured data in a JSON format. 
 
 How to install?
 ***************
@@ -27,7 +54,8 @@ Installing the WikiRevParser is easy with ``pip3``, but you'll also need to clon
 Read more on the `PyPI <https://pypi.org/project/wikirevparser/>`_ page of the library. 
 You can also find more information about the Wikipedia API wrapper on our version's `Github page <https://github.com/ajoer/Wikipedia>`_, or on the `readthedocs page <https://wikipedia.readthedocs.io/en/latest/>`_ of the original (shoutout to @goldsmith).
 
-You can of course also clone the `Github repository <https://github.com/ajoer/WikiRevParser>`_, but then you'll also need to install the requirements(see which in the `requirements <https://github.com/ajoer/WikiRevParser/requirements.txt>`_ file):
+You can of course also clone the `Github repository <https://github.com/ajoer/WikiRevParser>`_. 
+In this case, you'll also need to install the requirements (see which in the `requirements <https://github.com/ajoer/WikiRevParser/requirements.txt>`_ file):
 
 ::
 
@@ -38,13 +66,47 @@ You can of course also clone the `Github repository <https://github.com/ajoer/Wi
 How to use?
 ***********
 
+The WikiRevParser is easy to use for getting clean, structured Wikipedia revision histories.
+To get the revision history for the page on `Marie Curie <https://en.wikipedia.org/wiki/Marie_Curie>`_ on the English Wikipedia, run:
 
+::
+	>>> from wikirevparser import wikirevparser
+	>>> parser_instance = wikirevparser.ProcessRevisions("en", "Marie Curie") 
+	>>> parser_instance.wikipedia_page()
+	>>> data = parser_instance.parse_revisions()
 
-Content
-*******
+Now you have the revisions of the `Marie Curie <https://en.wikipedia.org/wiki/Marie_Curie>`_ page in a structured dictionary format, and you can start exploring the data.
 
-* :ref:`index`
+You can get information about the development of **links**:
+
+	>>> edits = list(data.items())
+	>>> first_links = edits[-1][1]["links"]
+	>>> latest_links = edits[0][1]["links"]
+	>>> present_now = first_links[0] in latest_links 
+	>>> print("The only link in the first version was '%s'. \nThat link is still present in the current version: %s." % (first_links[0], present_now))
+	
+	The only link in the first version was 'pierre and marie curie'.
+	That link is still present in the current version: True.
+
+Or explore the editing patterns of the contributing **Wikipedians**:
+
+	>>> from collections import Counter
+	>>> wikipedians = Counter()
+	>>> for timestamp in data:
+	>>>	  wikipedians[data[timestamp]["user"]] += 1
+	>>> most_frequent = wikipedians.most_common(1)[0]
+ 	>>> print("%s has edited the page the most, all of %d times (%d percent)!" % (most_frequent[0], most_frequent[1], (most_frequent[1]/len(data)*100)))
+	
+	Nihil novi has edited the page the most, all of 619 times (13 percent)!
+
+See :ref:`examples` for more inspiration and functionalities.
+
+Index
+*****
+
+* :ref:`home`
 * :ref:`quickstart`
+* :ref:`examples`
 * :ref:`search`
 
 

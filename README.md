@@ -1,10 +1,10 @@
 # WikiRevParser
 
-**WikiRevParser** is a Python library that parses Wikipedia revision histories and allows you to analyse the development of pages on Wikipedia across all language versions.
+**WikiRevParser** is a Python library that parses Wikipedia revision histories. It allows you to analyse the development of pages on Wikipedia over time and across language versions.
 
-The library extracts and parses Wikipedia revision histories from a language-page title pair and outputs clean, accessible data per timestamp in the revision history. 
+The library takes a language code and Wikipedia page title as input, extracts the revision history with our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia), and parses the noisy, unstructured content into clean, accessible data for each timestamp in the revision history. 
 You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more.
-	
+
 ## Installation
 
 To install WikiRevParser, run:
@@ -28,32 +28,43 @@ To get the revision history for the page on [Marie Curie](https://en.wikipedia.o
 	>>> parser_instance.wikipedia_page()
 	>>> data = parser_instance.parse_revisions()
 
-**Get information about the development of links:**
+Now you have the revisions of the `Marie Curie <https://en.wikipedia.org/wiki/Marie_Curie>`_ page in a structured dictionary format, and you can start exploring the data.
+
+Let's look at the use of **links**.
+I want to know whether the links on the page are the same now as when the page was first made?
 
 	>>> edits = list(data.items())
 	>>> first_links = edits[-1][1]["links"]
 	>>> latest_links = edits[0][1]["links"]
-	>>> print("The only link in the first version was '%s'. \nThere were %d links in the latest version, e.g. '%s'." % (first_links[0], len(latest_links), latest_links[0]))
+	>>> present_now = first_links[0] in latest_links 
+	>>> print("The only link in the first version was '%s'. \nThat link is still present in the current version: %s." % (first_links[0], present_now))
 	
 	The only link in the first version was 'pierre and marie curie'.
-	There were 320 links in the latest version, e.g. 'congress poland'.
+	That link is still present in the current version: False.
 	
-**Get information about editors:**
+Okay, but what are then the most frequent links on the page now?
 
 	>>> from collections import Counter
-	>>> editors = Counter()
-	>>> for timestamp in data:
-	>>>	  editors[data[timestamp]["user"]] += 1
-	>>> most_frequent = editors.most_common(1)[0]
- 	>>> print("%s has edited the page the most, all of %d times (%d percent)!" % (most_frequent[0], most_frequent[1], (most_frequent[1]/len(data)*100)))
-	
-	Nihil novi has edited the page the most, all of 619 times (13 percent)!
+	>>> links = Counter()
+	>>> for l in latest_links:
+	...	links[l] += 1
+	>> print(links)
+	Counter({'polonium': 5, 'radium': 5, 'university of paris': 5, 'russian empire': 4, 'gabriel lippmann': 4, 'nobel prize in physics': 4, 'nobel prize in chemistry': 4, ... })
 
-You could also investigate the use of images, the changes in tables of content, analyse differences across different language versions, and much, much more. 
+Using the revision history parsed by the WikiRevParser, you could also answer questions like:
+* When was the 'pierre and marie curie' link deleted?
+* Who made that edit?
+* What are the most referenced sources?
+* How many Wikipedians edit the page?
+* Where are the Wikipedians located?
+* How frequently is the page edited? 
+* Has the page developed consistently or did editing intensify at one point?
+* and many other questions
+
 
 ## Documentation
 
-Read the docs at [readthedocs.io](https://wikirevparser.readthedocs.io/en/latest/)
+Read the docs at [wikirevparser.readthedocs.io](https://wikirevparser.readthedocs.io/en/latest/) for more details and use case examples.
 
 ## License
 
