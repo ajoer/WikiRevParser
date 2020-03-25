@@ -5,19 +5,14 @@
 The library takes a language code and Wikipedia page title as input, extracts the revision history with our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia), and parses the noisy, unstructured content into clean, accessible data for each timestamp in the revision history. 
 You can use this library to access the development of references of a page, analyse the content or images over time, compare the tables of content across languages, create editor networks, and much more.
 
-## Installation
+## Get Started
 
-To install WikiRevParser, run:
+Beside the WikiRevParser, you'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page. 
 
 	$ pip3 install wikirevparser
-	
-## Requirements
-
-The WikiRevParser requires Python 3+.
-
-You'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page: 
-
 	$ git clone git@github.com:ajoer/Wikipedia.git
+
+NB: the WikiRevParser requires Python 3.
 
 ## Example
 
@@ -28,7 +23,7 @@ To get the revision history for the page on [Marie Curie](https://en.wikipedia.o
 	>>> parser_instance.wikipedia_page()
 	>>> data = parser_instance.parse_revisions()
 
-Now you have the revisions of the `Marie Curie <https://en.wikipedia.org/wiki/Marie_Curie>`_ page in a structured dictionary format, and you can start exploring the data.
+Now you have the revisions of the [Marie Curie](https://en.wikipedia.org/wiki/Marie_Curie) page in a structured dictionary format, and you can start exploring the data.
 
 Let's look at the use of **links**.
 I want to know whether the links on the page are the same now as when the page was first made?
@@ -54,13 +49,18 @@ Okay, but what are then the most frequent links on the page now?
 Using the revision history parsed by the WikiRevParser, you could also answer questions like:
 * When was the 'pierre and marie curie' link deleted?
 * Who made that edit?
-* What are the most referenced sources?
-* How many Wikipedians edit the page?
+* Did that editor also edit the [Afrikaans page](https://af.wikipedia.org/wiki/Marie_Curie) on Marie Curie?
+* What are the most referenced sources on the page?
+* Which references are used on both the English and the [Arabic](https://ar.wikipedia.org/wiki/%D9%85%D8%A7%D8%B1%D9%8A_%D9%83%D9%88%D8%B1%D9%8A) pages?
+* How many Wikipedians have edited the English page? And the [Dutch page](https://nl.wikipedia.org/wiki/Marie_Curie)?
+* Do all language versions use the same image of Marie Curie as the top image?
 * Where are the Wikipedians located?
 * How frequently is the page edited? 
-* Has the page developed consistently or did editing intensify at one point?
-* and many other questions
+* Has the English page developed consistently or did editing intensify at one point?
+* How does the editing pattern of the English page match that of the [Korean page](https://ko.wikipedia.org/wiki/%EB%A7%88%EB%A6%AC_%ED%80%B4%EB%A6%AC)?
+* ... and many other questions
 
+See :ref:`examples` for more inspiration and functionalities, and go to [FAQ or file a bug](https://github.com/ajoer/WikiRevParser/issues) if you run into issues!
 
 ## Documentation
 
