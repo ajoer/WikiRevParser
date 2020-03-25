@@ -103,7 +103,7 @@ Using the revision history parsed by the WikiRevParser, you could also answer qu
 * Who made that edit?
 * Did that editor also edit the `Afrikaans page <https://af.wikipedia.org/wiki/Marie_Curie>`_ on Marie Curie?
 * What are the most referenced sources on the page?
-* Which references are used on both the English and the `Arabic <https://ar.wikipedia.org/wiki/%D9%85%D8%A7%D8%B1%D9%8A_%D9%83%D9%88%D8%B1%D9%8A>`_ pages?
+* Which references are used on both the English page and the `Arabic one <https://ar.wikipedia.org/wiki/%D9%85%D8%A7%D8%B1%D9%8A_%D9%83%D9%88%D8%B1%D9%8A>`_ pages?
 * How many Wikipedians have edited the English page? And the `Dutch page <https://nl.wikipedia.org/wiki/Marie_Curie>`_?
 * Do all language versions use the same image of Marie Curie as the top image?
 * Where are the Wikipedians located?
