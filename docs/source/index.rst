@@ -32,16 +32,12 @@ And see `FAQ or file a bug <https://github.com/ajoer/WikiRevParser/issues>`_ if 
 
 .. toctree::
    :maxdepth: 2
-   :caption: Index:
    
-   documentation
-   examples   
-
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
+* :ref:`documentation`
+* :ref:`examples `
 * :ref:`search`
 
 
