@@ -6,13 +6,13 @@
 Welcome to WikiRevParser's documentation!
 =========================================
 
+Contents:
+
 .. toctree::
    :maxdepth: 2
    
    documentation
-   examples
-
-
+   examples   
 
 Indices and tables
 ==================
