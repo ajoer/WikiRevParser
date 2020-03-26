@@ -7,12 +7,10 @@ You can use this library to access the development of references of a page, anal
 
 ## Get Started
 
-Beside the WikiRevParser, you'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page. 
+Beside the WikiRevParser, you'll need a version of our [Wikipedia API wrapper](https://github.com/ajoer/Wikipedia) (forked from [Wikipedia](https://github.com/goldsmith/Wikipedia) by @goldsmith), which extracts and returns the entire revision history of a Wikipedia page. Note that Python3+ is required.
 
 	$ pip3 install wikirevparser
 	$ git clone git@github.com:ajoer/Wikipedia.git
-
-NB: the WikiRevParser requires Python 3.
 
 ## Example
 
