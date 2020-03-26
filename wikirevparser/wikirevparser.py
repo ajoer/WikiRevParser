@@ -251,7 +251,7 @@ class ProcessRevisions:
 	def parse_revisions(self):
 		# Input: revisions from Wikipedia page. 
 		# Output: dictionary with extracted page elements per revision.
-		data = OrderedDict()
+		data = OrderedDict([])
 
 		if self.revisions == None:return None
 
