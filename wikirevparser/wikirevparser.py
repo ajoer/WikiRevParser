@@ -85,16 +85,6 @@ class ProcessRevisions:
 
 		return types
 
-	def get_tlds(self, url_list):
-		# Get the top level domains (e.g. .de) from urls.
-		tlds = Counter()
-
-		for url in url_list:
-			tld = url.split("/")[0].split(".")[-1]
-			tlds[tld] += 1
-
-		return tlds 
-
 	def get_urls(self, input_list):
 		# Get URLs.
 		urls = []
@@ -194,6 +184,7 @@ class ProcessRevisions:
 				if len(l) != 2 and not l.islower():
 					
 					# Categories
+					if ""
 					categories.append(category)
 
 				self.content = self.replace_link(self.content, link, "")
@@ -215,12 +206,11 @@ class ProcessRevisions:
 		citations, self.content = self.get_occurrences(r"{{[c|C]ite [" + regex_letters + regex_symbols + ">]+}}", self.content)
 		
 		urls = self.get_urls(references + citations + [x for x in self.content.split()])
-		tlds_origin = self.get_tlds(urls)
 		
 		reference_types = self.get_reference_types(references + citations)
 		reference_template_types += reference_types
 		
-		return urls, tlds_origin, reference_template_types
+		return urls, reference_template_types
 
 	def parse_sections(self):
 		# Get and parse section titles.
@@ -276,7 +266,7 @@ class ProcessRevisions:
 			if "*" not in revision["slots"]["main"].keys(): continue
 			self.content = revision["slots"]["main"]["*"]
 			
-			urls, tlds_origin, reference_template_types = self.parse_references()
+			urls, reference_template_types = self.parse_references()
 			images, captions, links_from_captions = self.parse_images()
 			links, categories = self.parse_links_categories()
 			sections = self.parse_sections()
@@ -289,7 +279,6 @@ class ProcessRevisions:
 			parsed_data["links"] = links + links_from_captions
 			parsed_data["reference_template_types"] = reference_template_types
 			parsed_data["sections"] = sections
-			parsed_data["tlds_origin"] = tlds_origin
 			parsed_data["urls"] = urls
 			parsed_data["user"] = user
 
