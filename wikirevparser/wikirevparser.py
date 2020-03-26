@@ -184,7 +184,6 @@ class ProcessRevisions:
 				if len(l) != 2 and not l.islower():
 					
 					# Categories
-					if ""
 					categories.append(category)
 
 				self.content = self.replace_link(self.content, link, "")
