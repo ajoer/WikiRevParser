@@ -51,31 +51,29 @@ In the following, we use the data for a timepoint in the revision history of the
 	'links': ['congress poland', 'sancellemoz', 'france', 'poland', ...],
 	'reference_template_types': Counter({'book': 4, 'web': 1}), 
 	'sections': [['Life', 'Prizes', 'Tribute', 'See also', ...], [], []],
-	'tlds_origin': Counter({'org': 12, 'com': 5, 'pl': 3, 'edu': 2, ...], 
 	'urls': ['mlahanas.de/Physics/Bios/MarieCurie.html', ...],
 	'user': '67.34.139.186'
 	}
 
 **Captions** (list) are captions that accompany images on the page. 
-The captions are extracted and link markup is removed before the string is tokenized.
+The captions are extracted and link markup is removed before the string is tokenized and end punctuation is added if missing.
 
-**Categories** (list) are the categories assigned to the page at the bottom of the page. These are extracted and the "Categories:" prefix removed, regardless of language.
+**Categories** (list) are the categories assigned to the page at the bottom of the page. These are extracted and the "Categories:" prefix removed, regardless of language. The content is tokenized and end punctuation is added if missing.
 
-**Content** (string) is the cleaned, markup-free text content of the page. Images, tables, section titles, references, and citations have been removed as well as any markup, e.g. for links. 
+**Content** (string) is the cleaned, markup-free text content of the page. Images, tables, section titles, references, and citations have been removed as well as any markup, e.g. for links. The content is tokenized and end punctuation is added if missing.
 
 **Images** (list) are the links to commons.wikimedia.org, where the image used on the page is kept. The name of each image is extracted and appended with the proper link to commons, so the image can be directly extracted.
 
-**Links** (list)
+**Links** (list) are the internal Wikipedia links used on the page, i.e. all the blue words on the page (and in captions). They are extracted and lower-cased. 
 
-**Sections**
+**Sections** (list of lists) are the headers used on the page and reflected in the table of content in the UI. These are extracted and organized based on depth, max depth is 3. The content is tokenized and end punctuation is added if missing.
 
-**Reference types**
+**Reference urls** (list) are the urls used in references or citations on the page. These appear at the bottom of the page in the UI but are embedded in the text in the extracted unstructured string. 
+We perform two 
 
-**Reference top level domains**
+**Reference types** (list) some Wikipedians use reference templates for adding references. These templates are reference type specific (e.g. "book", "web", "news") and are extracted when available. 
 
-**Reference urls**
-
-**User**
+**User** (string) is the IP address or user name of the user who made the revision. 
 
 
 How to install?
