@@ -8,7 +8,6 @@ import re
 import string
 
 from collections import Counter, defaultdict, OrderedDict
-from urllib.request import urlopen
 from Wikipedia.wikipedia import wikipedia
 from Wikipedia.wikipedia import exceptions
 
@@ -18,13 +17,15 @@ class ProcessRevisions:
 
 		self.language = language
 		self.event = event
+		self.revisions = {}
+		self.content = ""
+		self.links = []
 		
 	def wikipedia_page(self):
 		# Get Wikipedia revision history
 		wikipedia.set_lang(self.language)
 
 		try:
-			print("\t* Getting data *")
 			event_pagetitle = '_'.join(self.event.split())
 			page = wikipedia.WikipediaPage(event_pagetitle)
 			self.page = page
@@ -32,15 +33,73 @@ class ProcessRevisions:
 			return page
 
 		except exceptions.PageError:
-			print("\tThere is no '%s' page in the '%s' language version of Wikipedia, try another one" % (self.event, self.language))
 			return None
 
 	def replace_link(self, input_string, link, text):
 		# Replace link with text
 		output_string = input_string.replace("[[%s]]" % link, text)
 		output_string = output_string.replace("[[%s|%s]]" % (link, text), text)
-		
 		return output_string
+
+	def get_caption(self, line):
+		# Get captions and links from captions, and replace both by string.
+		# Todo: fix bug with "<ref" in caption
+
+		if "|alt=" in line:
+
+			elements = line.split("|alt=")[-1].split("|")[1:]
+			caption = '|'.join(elements)[:-2]
+			self.content = self.content.replace(line, caption)
+			
+		else:
+			caption = re.search(r"thumb\|(.*)\]\]", line, re.IGNORECASE)
+			if not caption: return None 
+			caption = caption.group(1)
+			if "px" in caption or caption.startswith("{{legend"): return None
+
+		# Links
+		links, texts = self.get_links(caption)
+
+		for link, text in zip(links, texts):
+			caption = self.replace_link(caption, link, text)
+
+			self.content = self.replace_link(self.content, link, text)
+			self.links.append(link.lower())
+
+		caption = caption.split("|")[-1].strip()
+		caption = self.proper_formatting(caption, punct=True)
+
+		return caption
+
+	def get_category(self, link):
+		# Get categories and remove label and language links.
+		elements = link.split(":")
+
+		if len(elements) == 2:
+			label, category = elements
+
+		elif len(elements) == 3:
+			label, wiki, category = elements
+		
+		# Filter out language links
+		if len(label) == 2 and label.islower(): return None
+
+		return category
+
+	def get_image_link(self, line):
+		# Get image title and return correct link to commons.wikimedia.org
+		occurrence = re.search(r"(:|=)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
+		if not occurrence: 
+			occurrence = re.search(r"(^)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
+		try:
+			image_title, image_extension = occurrence.group(2,3)
+		except AttributeError: return None
+		if ":" in image_title:
+			image_title = image_title.split(":")[-1]
+
+		image_title = '_'.join([x for x in image_title.split()])
+		image_link = "https://commons.wikimedia.org/wiki/File:" + image_title + image_extension
+		return image_link
 
 	def get_links(self, input_string):
 		# Get links from content.
@@ -107,7 +166,6 @@ class ProcessRevisions:
 		# Get and parse images.
 		images = []
 		captions = []
-		links_from_captions = []
 		extensions = [".jpg", ".svg", ".png", ".JPG", ".SVG", ".PNG"]
 
 		for line in self.content.split("\n"):
@@ -115,84 +173,32 @@ class ProcessRevisions:
 
 				if not extension in line: continue
 
-				# Images
-				occurrence = re.search(r"(:|=)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
-				if not occurrence: 
-					occurrence = re.search(r"(^)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
-				try:
-					image_title, image_extension = occurrence.group(2,3)
-				except AttributeError:
-					print("\tThe image in this line has not been extracted:\t", line)
-					continue
-				if ":" in image_title:
-					image_title = image_title.split(":")[-1]
-
-				image_title = '_'.join([x for x in image_title.split()])
-				image_link = "https://commons.wikimedia.org/wiki/File:" + image_title + image_extension
+				image_link = self.get_image_link(line)
 				images.append(image_link)
+
 				self.content = self.content.replace(line, "")
 
-				# Captions
-				if "|alt=" in line:
-
-					elements = line.split("|alt=")[-1].split("|")[1:]
-					caption = '|'.join(elements)[:-2]
-					self.content = self.content.replace(line, caption)
-					
-				else:
-					caption = re.search(r"thumb\|(.*)\]\]", line, re.IGNORECASE)
-					if not caption: continue 
-					caption = caption.group(1)
-					if "px" in caption or caption.startswith("{{legend"): continue
-
-				# Links
-				links, texts = self.get_links(caption)
-
-				for link, text in zip(links, texts):
-					caption = self.replace_link(caption, link, text)
-					self.content = self.replace_link(self.content, link, text)
-					
-					links_from_captions.append(link.lower())
-
-				caption = caption.split("|")
-				if len(caption) > 1: caption = caption[1]
-				if len(caption) < 1: continue
-				caption = self.proper_formatting(caption, punct=False)
+				caption = self.get_caption(line)
 				captions.append(caption)
+				
+		return images, captions
 
-		return images, captions, links_from_captions
-
-	def parse_links_categories(self):
-		# Get and parse links and categories.
+	def parse_categories(self):
+		# Get and parse categories (and links).
 		categories = []
-		links = []
 		possible_links, texts = self.get_links(self.content)
 
 		for link, text in zip(possible_links,texts):
 
 			if ":" in link:
-				elements = link.split(":")
-				if len(elements) == 2:
-					l, category = elements
-				elif len(elements) == 3:
-					l, wiki, category = elements
-				else:
-					print("\tThere is an unexpected number of elements in this link:\t", link)
-					continue
-
-				# Language links
-				if len(l) != 2 and not l.islower():
-					
-					# Categories
-					categories.append(category)
-
+				category = self.get_category(link)
 				self.content = self.replace_link(self.content, link, "")
 
 			else:
-				links.append(link.lower())
+				self.links.append(link.lower())
 				self.content = self.replace_link(self.content, link, text)
 
-		return links, categories
+		return categories
 
 	def parse_references(self):
 		# Get and parse references and the top level domains.
@@ -211,8 +217,19 @@ class ProcessRevisions:
 		
 		return urls, reference_template_types
 
+	def proper_formatting(self, input_string, punct=True):
+		# Add end punct, strip quotation marks, and tokenize.
+		if punct:
+			if input_string[-1] not in string.punctuation:
+				input_string += "."
+
+		input_string = "".join([x for x in input_string if x != "'"])
+		output_string = ' '.join(nltk.word_tokenize(input_string))
+		return output_string
+
 	def parse_sections(self):
 		# Get and parse section titles.
+		# Todo: improve section organization in output
 		sections = []
 		header1s, self.content = self.get_occurrences(r"[^=]={2}([^=].*?)={2}", self.content)
 		header2s, self.content = self.get_occurrences(r"[^=]={3}([^=].*?)={3}", self.content)
@@ -223,17 +240,6 @@ class ProcessRevisions:
 
 		return sections
 
-	def proper_formatting(self, input_string, punct=True):
-		# Add end punct, strip quotation marks, and tokenize.
-		if punct:
-			if input_string[-1] not in string.punctuation: 
-				input_string += "."
-
-		input_string = "".join([x for x in input_string if x != "'"])
-		output_string = ' '.join(nltk.word_tokenize(input_string))
-		
-		return output_string
-
 	def parse_text(self):
 		# Get and remove tables and markup from content.
 		clean_content = []
@@ -241,6 +247,7 @@ class ProcessRevisions:
 
 		for line in self.content.split("\n"):
 
+			line = line.strip()
 			if len(line) == 0: continue
 			if line[0] in string.punctuation or "px" in line: continue
 
@@ -253,7 +260,7 @@ class ProcessRevisions:
 		# Output: dictionary with extracted page elements per revision.
 		data = OrderedDict([])
 
-		if self.revisions == None:return None
+		if self.revisions == None: return None
 
 		for n, revision in enumerate(self.revisions):
 			parsed_data = defaultdict()
@@ -266,8 +273,8 @@ class ProcessRevisions:
 			self.content = revision["slots"]["main"]["*"]
 			
 			urls, reference_template_types = self.parse_references()
-			images, captions, links_from_captions = self.parse_images()
-			links, categories = self.parse_links_categories()
+			images, captions = self.parse_images()
+			categories = self.parse_categories()
 			sections = self.parse_sections()
 			self.parse_text()
 
@@ -275,7 +282,7 @@ class ProcessRevisions:
 			parsed_data["categories"] = categories
 			parsed_data["content"] = self.content
 			parsed_data["images"] = images
-			parsed_data["links"] = links + links_from_captions
+			parsed_data["links"] = self.links
 			parsed_data["reference_template_types"] = reference_template_types
 			parsed_data["sections"] = sections
 			parsed_data["urls"] = urls
