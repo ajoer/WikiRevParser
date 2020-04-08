@@ -25,7 +25,9 @@ Wikipedia, the largest online encyclopedia in the world, is available in 300+ la
 Each language version is unique and offers a different presentation of concepts, people, events and places in the world than the other Wikipedias. 
 When a page on one of the Wikipedia language versions is revised, the previous version of the page is stored and added to the chain of previous versions of the page. 
 
-These previous versions of each page are retrievable using the [MediaWiki API](https://www.mediawiki.org/wiki/API:Main_page), however the output is noisy and contains markup.
+These previous versions of each page are retrievable using the [MediaWiki API](https://www.mediawiki.org/wiki/API:Main_page), and large amounts of scholarly work rely on the availability of these revision histories (TODO: cite). 
+
+The output from the MediaWiki API, however, is noisy and contains markup.
 Since each language version, and sometimes even each individual page, have been developed in isolation from other pages, they can each have their own markup standards and ways of representation information types. This complicates the use of the revision histories for social science and humanities research since a great deal of complicated data processing is required to get the data in a state ready for analysis.
 
 WikiRevParser is a Python library that pre-processes and parses the noisy Wikipedia revision histories and outputs clean, structured data ready for research and data analysis.
