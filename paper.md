@@ -15,6 +15,7 @@ affiliations:
  - name: Department of Media Studies, University of Amsterdam
    index: 1
 date: 8 April 2020
+bibliography: paper.bib
 
 ---
 
