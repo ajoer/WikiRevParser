@@ -37,13 +37,19 @@ class ProcessRevisions:
 
 	def replace_link(self, input_string, link, text):
 		# Replace link with text
+		if type(input_string) != str:
+			return None
+
 		output_string = input_string.replace("[[%s]]" % link, text)
 		output_string = output_string.replace("[[%s|%s]]" % (link, text), text)
+
 		return output_string
 
 	def get_caption(self, line):
 		# Get captions and links from captions, and replace both by string.
 		# Todo: fix bug with "<ref" in caption
+		if type(line) != str:
+			return None
 
 		if "|alt=" in line:
 
@@ -73,6 +79,9 @@ class ProcessRevisions:
 
 	def get_category(self, link):
 		# Get categories and remove label and language links.
+		if type(link) != str:
+			return None
+
 		elements = link.split(":")
 
 		if len(elements) == 2:
@@ -81,6 +90,7 @@ class ProcessRevisions:
 		elif len(elements) == 3:
 			label, wiki, category = elements
 		
+		else: return None
 		# Filter out language links
 		if len(label) == 2 and label.islower(): return None
 
@@ -88,6 +98,9 @@ class ProcessRevisions:
 
 	def get_image_link(self, line):
 		# Get image title and return correct link to commons.wikimedia.org
+		if type(line) != str:
+			return None
+
 		occurrence = re.search(r"(:|=)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
 		if not occurrence: 
 			occurrence = re.search(r"(^)([^(:|=)].*)(.jpg|.svg|.png)", line, re.IGNORECASE)
@@ -103,19 +116,23 @@ class ProcessRevisions:
 
 	def get_links(self, input_string):
 		# Get links from content.
+
+		if type(input_string) != str:
+			return None, None
+
+		double_square_bracket, content = self.get_occurrences(r"\[\[(.*?)\]\]", input_string)
 		links = []
 		texts = []
 
-		double_square_bracket, content_subbed = self.get_occurrences(r"\[\[(.*?)\]\]", input_string)
 		for element in double_square_bracket:
 			elements = element.split("|")
 
 			link = elements[0]
-
 			if len(elements) == 2:
 				text = elements[1]
 			else: 
 				text = link
+
 			links.append(link)
 			texts.append(text)
 
@@ -123,6 +140,10 @@ class ProcessRevisions:
 
 	def get_occurrences(self, regex, content):
 		# Get references/citations.
+
+		if type(content) != str:
+			return None
+
 		exp = re.compile(regex, re.IGNORECASE)
 		occurrences = exp.findall(content)
 		content = re.sub(exp, '', content)
@@ -131,6 +152,12 @@ class ProcessRevisions:
 
 	def get_reference_types(self, input_list):
 		# Get the reference type from a reference/citation block if annotated.
+		if type(input_list) != list or len(input_list) < 1:
+			return None
+
+		elif type(input_list[0]) != str:
+			return None
+
 		types = Counter()
 
 		for element in input_list:
@@ -213,18 +240,25 @@ class ProcessRevisions:
 		urls = self.get_urls(references + citations + [x for x in self.content.split()])
 		
 		reference_types = self.get_reference_types(references + citations)
-		reference_template_types += reference_types
+		if reference_types != None: 
+			reference_template_types += reference_types
 		
 		return urls, reference_template_types
 
 	def proper_formatting(self, input_string, punct=True):
 		# Add end punct, strip quotation marks, and tokenize.
+
+		if type(input_string) != str:
+			return None
+		if len(input_string) < 1:
+			return None 
 		if punct:
 			if input_string[-1] not in string.punctuation:
 				input_string += "."
 
 		input_string = "".join([x for x in input_string if x != "'"])
 		output_string = ' '.join(nltk.word_tokenize(input_string))
+
 		return output_string
 
 	def parse_sections(self):

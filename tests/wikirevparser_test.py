@@ -22,36 +22,78 @@ class WikiRevParserTest(unittest.TestCase):
 
     def test_get_caption(self):
         # data from https://da.wikipedia.org/wiki/Langskib
-        input_str = "[[Fil:Bergens Byvåpen 1299.jpg|thumb|[[Bergen]]s [[byvåben]] viser et drageskib, dvs. et skib med [[Drage (fabeldyr)|dragehoved]] i stavnen.]]"
-        target = "Bergens byvåben viser et drageskib , dvs . et skib med dragehoved i stavnen ."
-        caption = self.parser.get_caption(input_str)
+        input1 = "[[Fil:Bergens Byvåpen 1299.jpg|thumb|[[Bergen]]s [[byvåben]] viser et drageskib, dvs. et skib med [[Drage (fabeldyr)|dragehoved]] i stavnen.]]"
+        target1 = "Bergens byvåben viser et drageskib , dvs . et skib med dragehoved i stavnen ."
+        caption1 = self.parser.get_caption(input1)
+
+        input2 = "Bergens byvåben viser et drageskib , dvs . et skib med dragehoved i stavnen ."
+        target2 = None
+        caption2 = self.parser.get_caption(input2)
+
+        input3 = []
+        target3 = None
+        caption3 = self.parser.get_caption(input3)
         
-        self.assertEqual(caption, target)
+        self.assertEqual(caption1, target1)
+        self.assertEqual(caption2, target2)
+        self.assertEqual(caption3, target3)
 
     def test_get_links(self):
         # data from https://da.wikipedia.org/wiki/Langskib
-        input_str = """'''Drageskibe''' var langskibe med et udskåret [[Drage (fabeldyr)|dragehoved]] i [[stævn]]en<ref>https://www.naob.no/ordbok/drageskip</ref> for at markere [[status]]en til den [[konge]] eller [[høvding]], skibet tilhørte."""
-        target = ['Drage (fabeldyr)', 'stævn', 'status', 'konge', 'høvding']
-        links, _other_ = self.parser.get_links(input_str)
+        input1 = """'''Drageskibe''' var langskibe med et udskåret [[Drage (fabeldyr)|dragehoved]] i [[stævn]]en<ref>https://www.naob.no/ordbok/drageskip</ref> for at markere [[status]]en til den [[konge]] eller [[høvding]], skibet tilhørte."""
+        target1 = ['Drage (fabeldyr)', 'stævn', 'status', 'konge', 'høvding']
+        links1, _other_ = self.parser.get_links(input1)
         
-        self.assertEqual(links, target)
+        input2 = 3
+        target2 = None
+        links2, _other_ = self.parser.get_links(input2)
+
+        input3 = []
+        target3 = None
+        links3, _other_ = self.parser.get_links(input3)
+
+        self.assertEqual(links1, target1)
+        self.assertEqual(links2, target2)
+        self.assertEqual(links3, target3)
 
     def test_get_reference_types(self):
         # data from https://da.wikipedia.org/wiki/Langskib
-        input_list = ['>https://www.naob.no/ordbok/drageskip', '>http://www.vikingskip.com/vikingskipstyper.htm', '>https://www.nrk.no/sorlandet/oppdaget-hellig-olavs-langskip-1.7428766', '>https://heimskringla.no/wiki/Olav_Tryggvessons_saga (kap. 88)', '>https://heimskringla.no/wiki/Hakon_Hakonsøns_den_Gamles_Saga_(C.C.Rafn) (kap. 249)']
-        target = Counter({'_nill_': 5})
-        types = self.parser.get_reference_types(input_list)    
+        input1 = ['>https://www.naob.no/ordbok/drageskip', '>http://www.vikingskip.com/vikingskipstyper.htm', '>https://www.nrk.no/sorlandet/oppdaget-hellig-olavs-langskip-1.7428766', '>https://heimskringla.no/wiki/Olav_Tryggvessons_saga (kap. 88)', '>https://heimskringla.no/wiki/Hakon_Hakonsøns_den_Gamles_Saga_(C.C.Rafn) (kap. 249)']
+        target1 = Counter({'_nill_': 5})
+        types1 = self.parser.get_reference_types(input1)    
         
-        self.assertEqual(types, target)
+        input2 = 3
+        target2 = None
+        types2 = self.parser.get_reference_types(input2)
+        
+        input3 = []
+        target3 = None
+        types3 = self.parser.get_reference_types(input3)
+
+        self.assertEqual(types1, target1)
+        self.assertEqual(types2, target2)
+        self.assertEqual(types3, target3)
 
     def test_replace_link(self):
         # data from https://da.wikipedia.org/wiki/Langskib
-        input_str = "Man har lavet [[rekonstruktion]]er af langskibe."
-        target = "Man har lavet rekonstruktioner af langskibe."
-        sub = "rekonstruktion"
-        output = self.parser.replace_link(input_str, sub, sub)
+        input1 = "Man har lavet [[rekonstruktion]]er af langskibe."
+        target1 = "Man har lavet rekonstruktioner af langskibe."
+        sub1 = "rekonstruktion"
+        output1 = self.parser.replace_link(input1, sub1, sub1)
+
+        input2 = 3
+        target2 = None
+        sub2 = "rekonstruktion"
+        output2 = self.parser.replace_link(input2, sub2, sub2)
         
-        self.assertEqual(output, target)
+        input3 = "Man har lavet [[rekonstruktion]]er af langskibe."
+        target3 = "Man har lavet [[rekonstruktion]]er af langskibe."
+        sub3 = "vikingerne"
+        output3 = self.parser.replace_link(input3, sub3, sub3)
+        
+        self.assertEqual(output1, target1)
+        self.assertEqual(output2, target2)
+        self.assertEqual(output3, target3)
             
     def test_get_image_link(self):
         # data from https://nl.wikipedia.org/wiki/Raymond_Poulidor
@@ -63,11 +105,16 @@ class WikiRevParserTest(unittest.TestCase):
         target2 = "https://commons.wikimedia.org/wiki/File:Jersey_gold.svg"
         output2 = self.parser.get_image_link(input2)
 
+        input3 = 3.4
+        target3 = None
+        output3 = self.parser.get_image_link(input3)
+
         self.assertEqual(output1, target1)
         self.assertEqual(output2, target2)
+        self.assertEqual(output3, target3)
         self.assertNotEqual(output1, target2)
 
-    def test_get_categories(self):
+    def test_get_category(self):
         # data from https://da.wikipedia.org/wiki/Langskib
         input1 = "Kategori:skibstyper"
         target1 = "skibstyper"
@@ -77,8 +124,13 @@ class WikiRevParserTest(unittest.TestCase):
         target2 = None
         output2 = self.parser.get_category(input2)
         
+        input3 = []
+        target3 = None
+        output3 = self.parser.get_category(input3)
+        
         self.assertEqual(output1, target1)
         self.assertEqual(output2, target2)
+        self.assertEqual(output3, target3)
         self.assertNotEqual(output1, target2)
         
     def test_proper_formatting(self):
@@ -87,12 +139,17 @@ class WikiRevParserTest(unittest.TestCase):
         target1 = "Fuldskala polsk langskib ."
         output1 = self.parser.proper_formatting(input1)
 
-        input2 = "Langskibe også kaldet drageskibe, skibe fra vikingetiden, var meget hurtige og solide. De var bygget, så de kunne sejle næsten helt ind til kysten, hvilket var en fordel i krig og på plyndringstogter. Skibene var smalle, hvilket gjorde dem lette at manøvrere. Langskibene havde mast og sejl, samt huller hele vejen langs skibets ræling, til de mange årer som også blev taget i brug."
-        target2 = "Langskibe også kaldet drageskibe , skibe fra vikingetiden , var meget hurtige og solide . De var bygget , så de kunne sejle næsten helt ind til kysten , hvilket var en fordel i krig og på plyndringstogter . Skibene var smalle , hvilket gjorde dem lette at manøvrere . Langskibene havde mast og sejl , samt huller hele vejen langs skibets ræling , til de mange årer som også blev taget i brug ."
+        input2 = [2, 3]
+        target2 = None
         output2 = self.parser.proper_formatting(input2)
+
+        input3 = "Langskibe også kaldet drageskibe, skibe fra vikingetiden, var meget hurtige og solide. De var bygget, så de kunne sejle næsten helt ind til kysten, hvilket var en fordel i krig og på plyndringstogter. Skibene var smalle, hvilket gjorde dem lette at manøvrere. Langskibene havde mast og sejl, samt huller hele vejen langs skibets ræling, til de mange årer som også blev taget i brug."
+        target3 = "Langskibe også kaldet drageskibe , skibe fra vikingetiden , var meget hurtige og solide . De var bygget , så de kunne sejle næsten helt ind til kysten , hvilket var en fordel i krig og på plyndringstogter . Skibene var smalle , hvilket gjorde dem lette at manøvrere . Langskibene havde mast og sejl , samt huller hele vejen langs skibets ræling , til de mange årer som også blev taget i brug ."
+        output3 = self.parser.proper_formatting(input3)
 
         self.assertEqual(output1, target1)
         self.assertEqual(output2, target2)
+        self.assertEqual(output3, target3)
         self.assertNotEqual(output1, target2)
 
     def test_get_urls(self):
