@@ -297,6 +297,8 @@ class ProcessRevisions:
 		if self.revisions == None: return None
 
 		for n, revision in enumerate(self.revisions):
+			self.links = []
+			self.content = ""
 			parsed_data = defaultdict()
 			timestamp = revision["timestamp"]
 
@@ -312,12 +314,12 @@ class ProcessRevisions:
 			sections = self.parse_sections()
 			self.parse_text()
 
-			parsed_data["captions"] = captions
+			#parsed_data["captions"] = captions
 			parsed_data["categories"] = categories
 			parsed_data["content"] = self.content
 			parsed_data["images"] = images
 			parsed_data["links"] = self.links
-			parsed_data["reference_template_types"] = reference_template_types
+			#parsed_data["reference_template_types"] = reference_template_types
 			parsed_data["sections"] = sections
 			parsed_data["urls"] = urls
 			parsed_data["user"] = user
