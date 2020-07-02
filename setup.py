@@ -12,7 +12,7 @@ print(install_reqs)
 
 setuptools.setup(
     name="wikirevparser",
-    version="0.0.7",
+    version="0.0.8",
     author="Anna Jørgensen",
     author_email="anka.jorgensen@gmail.com",
     description="Wikipedia revision history parser for Python",
