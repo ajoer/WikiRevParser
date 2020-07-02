@@ -12,7 +12,7 @@ authors:
     orcid: 0000-0002-2568-4360
     affiliation: 1
 affiliations:
- - name: Department of Media Studies, University of Amsterdam
+ - name: New Media and Digital Culture, Department of Media Studies, University of Amsterdam
    index: 1
 date: 8 April 2020
 bibliography: paper.bib
