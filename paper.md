@@ -14,7 +14,7 @@ authors:
 affiliations:
  - name: New Media and Digital Culture, Department of Media Studies, University of Amsterdam
    index: 1
-date: 8 April 2020
+date: 2 July 2020
 bibliography: paper.bib
 
 ---
